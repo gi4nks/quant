@@ -11,8 +11,6 @@ const (
 	format_light = "%{color}%{message}"
 )
 
-type action func()
-
 func NewTrace(n string) *Trace {
 	return &Trace{name: n}
 }
