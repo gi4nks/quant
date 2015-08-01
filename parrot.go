@@ -13,7 +13,7 @@ type Parrot struct {
 	name string
 }
 
-func (t Parrot) trace(a action) {
+func (t Parrot) trace(a A) {
 	a()
 }
 

@@ -1,3 +1,3 @@
 package quant
 
-type action func()
+type A func()
