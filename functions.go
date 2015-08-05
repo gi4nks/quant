@@ -1,11 +1,11 @@
 package quant
 
-type action0 func()
+type Action0 func()
 
-type action1 func() (interface {}, error)
+type Action1 func() (interface {}, error)
 
 
-func apply1(a action1) interface{} {
+func apply1(a Action1) interface{} {
 	ret, err := a()
 	
 	if err != nil {
