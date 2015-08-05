@@ -1,5 +1,6 @@
 package quant
 
+/*
 import (
 	"errors"
 	"testing"
@@ -18,3 +19,4 @@ func testFunction1() (string, error) {
 	return "", errors.New("Invalid Foo")
 	
 }
+*/
