@@ -18,7 +18,7 @@ type Parrot struct {
 	debugMode bool
 }
 
-func (t Parrot) trace(a action0) {
+func (t Parrot) trace(a Action0) {
 	a()
 }
 
