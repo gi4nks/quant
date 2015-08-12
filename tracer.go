@@ -16,14 +16,14 @@ func NewTrace(n string) *Trace {
 }
 
 type Trace struct {
-	name   string
+	name string
 	logger *logging.Logger
 }
 
 func (t *Trace) init(format_name string) {
-	t.logger = logging.MustGetLogger(t.name)
+	t.logger= logging.MustGetLogger(t.name)
 	format := logging.MustStringFormatter(format_name)
-
+	
 	// Configuring logger
 	backend := logging.NewLogBackend(os.Stdout, "", 0)
 	backendFormatter := logging.NewBackendFormatter(backend, format)
@@ -42,7 +42,7 @@ func (t *Trace) Light() {
 }
 
 func (t Trace) trace(a Action0) error {
-	if t.logger == nil {
+	if (t.logger == nil) {
 		return errors.New("tracer has not bee corretcly initialized, please very to call Full or Emply function before use")
 	}
 
