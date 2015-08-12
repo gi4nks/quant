@@ -41,7 +41,7 @@ func (t *Trace) Light() {
 	t.init(format_light)
 }
 
-func (t Trace) trace(a A) error {
+func (t Trace) trace(a Action0) error {
 	if t.logger == nil {
 		return errors.New("tracer has not bee corretcly initialized, please very to call Full or Emply function before use")
 	}

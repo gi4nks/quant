@@ -6,14 +6,19 @@ import (
 )
 
 func NewParrot(n string) *Parrot {
-	return &Parrot{name: n}
+	return &Parrot{name: n, debugMode: false}
+}
+
+func NewVerboseParrot(n string) *Parrot {
+	return &Parrot{name: n, debugMode: true}
 }
 
 type Parrot struct {
-	name string
+	name      string
+	debugMode bool
 }
 
-func (t Parrot) trace(a A) {
+func (t Parrot) trace(a Action0) {
 	a()
 }
 
@@ -23,4 +28,13 @@ func (t Parrot) Error(message string, err error) {
 
 func (t Parrot) Info(message string) {
 	t.trace(func() { fmt.Fprintln(os.Stdout, message) })
+}
+
+func (t Parrot) Debug(message string) {
+	t.trace(
+		func() {
+			if t.debugMode {
+				fmt.Fprintln(os.Stdout, message)
+			}
+		})
 }
