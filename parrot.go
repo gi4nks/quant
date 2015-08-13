@@ -42,3 +42,17 @@ func (t Parrot) Debug(message string) {
 			}
 		})
 }
+
+func (t Parrot) Print(a ...interface{}) {
+	t.trace(
+		func() {
+			fmt.Print(a...)
+		})
+}
+
+func (t Parrot) Println(a ...interface{}) {
+	t.trace(
+		func() {
+			fmt.Println(a...)
+		})
+}
