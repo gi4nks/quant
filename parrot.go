@@ -23,27 +23,38 @@ func (t Parrot) trace(a Action0) {
 	a()
 }
 
-func (t Parrot) Warn(message string, err error) {
-	//t.trace(func() { fmt.Fprintln(os.Stderr, message, err) })
-	t.trace(func() { fmt.Println(chalk.Yellow, message, err, chalk.Reset) })
+func (t Parrot) Warn(a ...interface{}) {
+	t.trace(func() {
+		fmt.Print(chalk.Yellow)
+		fmt.Println(a...)
+		fmt.Print(chalk.Reset)
+	})
 }
 
-func (t Parrot) Error(message string, err error) {
-	//t.trace(func() { fmt.Fprintln(os.Stderr, message, err) })
-	t.trace(func() { fmt.Println(chalk.Red, message, err, chalk.Reset) })
+func (t Parrot) Error(a ...interface{}) {
+	t.trace(func() {
+		fmt.Print(chalk.Red)
+		fmt.Println(a...)
+		fmt.Print(chalk.Reset)
+
+	})
 }
 
-func (t Parrot) Info(message string) {
-	//t.trace(func() { fmt.Fprintln(os.Stdout, message) })
-	t.trace(func() { fmt.Println(chalk.White, message, chalk.Reset) })
+func (t Parrot) Info(a ...interface{}) {
+	t.trace(func() {
+		fmt.Print(chalk.White)
+		fmt.Println(a...)
+		fmt.Print(chalk.Reset)
+	})
 }
 
-func (t Parrot) Debug(message string) {
+func (t Parrot) Debug(a ...interface{}) {
 	t.trace(
 		func() {
 			if t.debugMode {
-				//fmt.Fprintln(os.Stdout, message)
-				fmt.Println(chalk.Green, message, chalk.Reset)
+				fmt.Print(chalk.Green)
+				fmt.Println(a...)
+				fmt.Print(chalk.Reset)
 			}
 		})
 }
