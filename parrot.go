@@ -2,7 +2,6 @@ package quant
 
 import (
 	"fmt"
-	//"os"
 	"time"
 )
 
@@ -18,16 +17,17 @@ var (
 )
 
 func NewParrot(n string) *Parrot {
-	return &Parrot{name: n, debugMode: false}
+	return &Parrot{name: n, debugMode: false, on: true}
 }
 
 func NewVerboseParrot(n string) *Parrot {
-	return &Parrot{name: n, debugMode: true}
+	return &Parrot{name: n, debugMode: true, on: true}
 }
 
 type Parrot struct {
 	name      string
 	debugMode bool
+	on        bool
 }
 
 func colorForStatus(method string) string {
@@ -44,7 +44,9 @@ func colorForStatus(method string) string {
 }
 
 func (t Parrot) trace(a Action0) {
-	a()
+	if t.on {
+		a()
+	}
 }
 
 func (t Parrot) Warn(a ...interface{}) {
@@ -93,7 +95,7 @@ func (t Parrot) Debug(a ...interface{}) {
 
 				fmt.Printf("[%v] |%s %s %s| ",
 					end.Format("2006/01/02 - 15:04:05"),
-					statusColor, "DG", reset)
+					statusColor, "DB", reset)
 				fmt.Println(a...)
 			}
 		})
