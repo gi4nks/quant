@@ -2,18 +2,11 @@ package quant
 
 import (
 	"fmt"
+	"os"
 	"time"
-)
 
-var (
-	green   = string([]byte{27, 91, 57, 55, 59, 52, 50, 109})
-	white   = string([]byte{27, 91, 57, 48, 59, 52, 55, 109})
-	yellow  = string([]byte{27, 91, 57, 55, 59, 52, 51, 109})
-	red     = string([]byte{27, 91, 57, 55, 59, 52, 49, 109})
-	blue    = string([]byte{27, 91, 57, 55, 59, 52, 52, 109})
-	magenta = string([]byte{27, 91, 57, 55, 59, 52, 53, 109})
-	cyan    = string([]byte{27, 91, 57, 55, 59, 52, 54, 109})
-	reset   = string([]byte{27, 91, 48, 109})
+	"github.com/olekukonko/tablewriter"
+	"github.com/ttacon/chalk"
 )
 
 func NewParrot(n string) *Parrot {
@@ -30,19 +23,6 @@ type Parrot struct {
 	on        bool
 }
 
-func colorForStatus(method string) string {
-	switch {
-	case method == "debug":
-		return green
-	case method == "info":
-		return white
-	case method == "warn":
-		return yellow
-	default:
-		return red
-	}
-}
-
 func (t Parrot) trace(a Action0) {
 	if t.on {
 		a()
@@ -52,11 +32,10 @@ func (t Parrot) trace(a Action0) {
 func (t Parrot) Warn(a ...interface{}) {
 	t.trace(func() {
 		end := time.Now()
-		statusColor := colorForStatus("warn")
 
-		fmt.Printf("[%v] |%s %s %s| ",
-			end.Format("2006/01/02 - 15:04:05"),
-			statusColor, "WA", reset)
+		fmt.Printf("{%s%v%s} |%s%s%s| ",
+			chalk.Yellow, end.Format("2006/01/02 - 15:04:05"), chalk.Reset,
+			chalk.Cyan, "WA", chalk.Reset)
 		fmt.Println(a...)
 	})
 }
@@ -64,11 +43,10 @@ func (t Parrot) Warn(a ...interface{}) {
 func (t Parrot) Error(a ...interface{}) {
 	t.trace(func() {
 		end := time.Now()
-		statusColor := colorForStatus("error")
 
-		fmt.Printf("[%v] |%s %s %s| ",
-			end.Format("2006/01/02 - 15:04:05"),
-			statusColor, "ER", reset)
+		fmt.Printf("{%s%v%s} |%s%s%s| ",
+			chalk.Yellow, end.Format("2006/01/02 - 15:04:05"), chalk.Reset,
+			chalk.Red, "ER", chalk.Reset)
 		fmt.Println(a...)
 
 	})
@@ -77,11 +55,10 @@ func (t Parrot) Error(a ...interface{}) {
 func (t Parrot) Info(a ...interface{}) {
 	t.trace(func() {
 		end := time.Now()
-		statusColor := colorForStatus("info")
 
-		fmt.Printf("[%v] |%s %s %s| ",
-			end.Format("2006/01/02 - 15:04:05"),
-			statusColor, "IN", reset)
+		fmt.Printf("{%s%v%s} |%s%s%s| ",
+			chalk.Yellow, end.Format("2006/01/02 - 15:04:05"), chalk.Reset,
+			chalk.White, "IN", chalk.Reset)
 		fmt.Println(a...)
 	})
 }
@@ -91,11 +68,10 @@ func (t Parrot) Debug(a ...interface{}) {
 		func() {
 			if t.debugMode {
 				end := time.Now()
-				statusColor := colorForStatus("debug")
 
-				fmt.Printf("[%v] |%s %s %s| ",
-					end.Format("2006/01/02 - 15:04:05"),
-					statusColor, "DB", reset)
+				fmt.Printf("{%s%v%s} |%s%s%s| ",
+					chalk.Yellow, end.Format("2006/01/02 - 15:04:05"), chalk.Reset,
+					chalk.Green, "DB", chalk.Reset)
 				fmt.Println(a...)
 			}
 		})
@@ -112,5 +88,17 @@ func (t Parrot) Println(a ...interface{}) {
 	t.trace(
 		func() {
 			fmt.Println(a...)
+		})
+}
+
+func (t Parrot) TablePrint(header []string, body [][]string) {
+	t.trace(
+		func() {
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader(header)
+			table.SetBorder(false) // Set Border to false
+			table.AppendBulk(body) // Add Bulk Data
+			table.SetAlignment(3)
+			table.Render()
 		})
 }
