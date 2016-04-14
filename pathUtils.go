@@ -43,6 +43,8 @@ func (t PathUtils) ExecutableFolder() (string, error) {
 // CopyFile copies a file from src to dst. If src and dst files exist, and are
 // the same, then return success. Otherise, attempt to create a hard link
 // between the two files. If that fail, copy the file contents from src to dst.
+// Code from http://stackoverflow.com/questions/21060945/simple-way-to-copy-a-file-in-golang
+
 func (t PathUtils) CopyFile(src, dst string) (err error) {
 	sfi, err := os.Stat(src)
 	if err != nil {
