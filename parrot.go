@@ -3,9 +3,10 @@ package quant
 import (
 	"fmt"
 	"os"
+	"strings"
+	"text/tabwriter"
 	"time"
 
-	"github.com/olekukonko/tablewriter"
 	"github.com/ttacon/chalk"
 )
 
@@ -94,11 +95,21 @@ func (t Parrot) Println(a ...interface{}) {
 func (t Parrot) TablePrint(header []string, body [][]string) {
 	t.trace(
 		func() {
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader(header)
-			table.SetBorder(false) // Set Border to false
-			table.AppendBulk(body) // Add Bulk Data
-			table.SetAlignment(3)
-			table.Render()
+			// setup the tab writer
+			w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
+
+			h := strings.Join(header, "\t")
+
+			// print header
+			fmt.Fprintln(w, h)
+
+			for _, p := range body {
+				b := strings.Join(p, "\t")
+				bb := b + "\n"
+				fmt.Fprintf(w, bb)
+			}
+
+			w.Flush()
+
 		})
 }
