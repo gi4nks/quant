@@ -113,3 +113,25 @@ func (t Parrot) TablePrint(header []string, body [][]string) {
 
 		})
 }
+
+/*
+func (t Parrot) TablePrint(header []string, body []string) {
+	t.trace(
+		func() {
+			// setup the tab writer
+			w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
+
+			h := strings.Join(header, "\t")
+
+			// print header
+			fmt.Fprintln(w, h)
+
+			b := strings.Join(body, "\t")
+			bb := b + "\n"
+			fmt.Fprintf(w, bb)
+
+			w.Flush()
+
+		})
+}
+*/
