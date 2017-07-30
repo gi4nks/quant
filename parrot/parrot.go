@@ -1,4 +1,4 @@
-package quant
+package parrot
 
 import (
 	"fmt"
@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/ttacon/chalk"
+
+	"github.com/gi4nks/quant/functions"
 )
 
 func NewParrot(n string) *Parrot {
@@ -24,7 +26,7 @@ type Parrot struct {
 	on        bool
 }
 
-func (t Parrot) trace(a Action0) {
+func (t Parrot) trace(a functions.Action0) {
 	if t.on {
 		a()
 	}

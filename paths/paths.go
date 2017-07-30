@@ -1,4 +1,4 @@
-package quant
+package paths
 
 import (
 	"fmt"
@@ -9,14 +9,7 @@ import (
 	"github.com/kardianos/osext"
 )
 
-type PathUtils struct {
-}
-
-func NewPathUtils() *PathUtils {
-	return &PathUtils{}
-}
-
-func (t PathUtils) ExistsPath(path string) (bool, error) {
+func ExistsPath(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil
@@ -27,8 +20,8 @@ func (t PathUtils) ExistsPath(path string) (bool, error) {
 	return true, err
 }
 
-func (t PathUtils) CreatePath(path string) error {
-	pa, err := t.ExecutableFolder()
+func CreatePath(path string) error {
+	pa, err := ExecutableFolder()
 	if err == nil {
 		return err
 	}
@@ -36,7 +29,7 @@ func (t PathUtils) CreatePath(path string) error {
 	return os.Mkdir(pa+string(filepath.Separator)+path, 0777)
 }
 
-func (t PathUtils) ExecutableFolder() (string, error) {
+func ExecutableFolder() (string, error) {
 	return osext.ExecutableFolder()
 }
 
@@ -45,7 +38,7 @@ func (t PathUtils) ExecutableFolder() (string, error) {
 // between the two files. If that fail, copy the file contents from src to dst.
 // Code from http://stackoverflow.com/questions/21060945/simple-way-to-copy-a-file-in-golang
 
-func (t PathUtils) CopyFile(src, dst string) (err error) {
+func CopyFile(src, dst string) (err error) {
 	sfi, err := os.Stat(src)
 	if err != nil {
 		return
@@ -71,7 +64,7 @@ func (t PathUtils) CopyFile(src, dst string) (err error) {
 	if err = os.Link(src, dst); err == nil {
 		return
 	}
-	err = t.CopyFileContents(src, dst)
+	err = CopyFileContents(src, dst)
 	return
 }
 
@@ -79,7 +72,7 @@ func (t PathUtils) CopyFile(src, dst string) (err error) {
 // by dst. The file will be created if it does not already exist. If the
 // destination file exists, all it's contents will be replaced by the contents
 // of the source file.
-func (t PathUtils) CopyFileContents(src, dst string) (err error) {
+func CopyFileContents(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
