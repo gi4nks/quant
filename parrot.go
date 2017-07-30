@@ -1,4 +1,4 @@
-package parrot
+package quant
 
 import (
 	"fmt"
@@ -8,8 +8,6 @@ import (
 	"time"
 
 	"github.com/ttacon/chalk"
-
-	"github.com/gi4nks/quant/functions"
 )
 
 func NewParrot(n string) *Parrot {
@@ -26,7 +24,7 @@ type Parrot struct {
 	on        bool
 }
 
-func (t Parrot) trace(a functions.Action0) {
+func (t Parrot) trace(a Action0) {
 	if t.on {
 		a()
 	}
@@ -94,7 +92,7 @@ func (t Parrot) Println(a ...interface{}) {
 		})
 }
 
-func (t Parrot) TablePrint(header []string, body [][]string) {
+func (t Parrot) Tablify(header []string, body [][]string) {
 	t.trace(
 		func() {
 			// setup the tab writer

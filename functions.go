@@ -1,4 +1,4 @@
-package functions
+package quant
 
 type Action0 func()
 

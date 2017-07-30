@@ -1,4 +1,4 @@
-package parrot
+package quant
 
 import (
 	"testing"
